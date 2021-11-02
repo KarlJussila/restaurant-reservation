@@ -17,16 +17,28 @@ async function read(req, res, next) {
 }
 
 async function list(req, res, next) {
+    const { mobile_phone } = req.query;
+    if (mobile_phone) {
+        return res.json({ data: await service.listByPhoneNumber(mobile_phone) })
+    }
     res.json({ data: await service.list(req, res) });
 }
 
 async function update(req, res) {
-  res.json({ data: await service.update(req.body) });
+    const updatedReservation = req.body.data;
+    updatedReservation.reservation_id = req.params.reservationId;
+    const data = await service.update(updatedReservation);
+    res.json({ data });
+}
+
+async function create(req, res) {
+    const result = service.create(req.body.data);
+    res.status(201).json({ message: "Created" });
 }
 
 module.exports = {
-    read: [asyncErrorBoundary(movieExists), asyncErrorBoundary(read)],
-    list,
-    getTheaters: [asyncErrorBoundary(movieExists), asyncErrorBoundary(getTheaters)],
-    getReviews: [asyncErrorBoundary(movieExists), asyncErrorBoundary(getReviews)]
+    read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
+    list: asyncErrorBoundary(list),
+    update: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(update)],
+    create: [service.validateBody, asyncErrorBoundary(create)]
 };

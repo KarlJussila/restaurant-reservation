@@ -1,15 +1,16 @@
 const router = require("express").Router({ mergeParams: true });
-const controller = require("./reservations.controller");
+const controller = require("./tables.controller");
 const methodNotAllowed = require("../errors/methodNotAllowed");
 const cors = require("cors");
 
-const corsConfig = cors({ methods: ["GET", "PUT", "POST"] });
+const corsConfig = cors({ methods: ["GET", "PUT", "POST", "DELETE"] });
 
-router.route("/:reservationId/status")
-    .put(corsConfig, controller.update)
+router.route("/:tableId/seat")
+    .put(corsConfig, controller.seat)
+    .delete(corsConfig, controller.unseat)
     .all(methodNotAllowed);
 
-router.route("/:reservationId")
+router.route("/:tableId")
     .get(corsConfig, controller.read)
     .put(corsConfig, controller.update)
     .all(methodNotAllowed);
