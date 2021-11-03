@@ -56,6 +56,7 @@ function SeatReservation(props) {
                     pathname: '/dashboard',
                     search: `?date=${reservation.reservation_date}`
                 });
+                window.location.reload(false);
             })
             .catch(setBackendError);
         return () => abortController.abort();
