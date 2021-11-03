@@ -23,7 +23,10 @@ function SeatReservation(props) {
 
     const [backendError, setBackendError] = useState(null);
 
-    useEffect(loadData, []);
+    useEffect(() => {
+        loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => console.log(errors), [errors]);
 
     function loadData() {

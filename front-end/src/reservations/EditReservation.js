@@ -33,7 +33,10 @@ function EditReservation(props) {
 
     const [backendError, setBackendError] = useState(null);
 
-    useEffect(loadReservation, []);
+    useEffect(() => {
+        loadReservation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     function loadReservation() {
         if (props.location) {
             setReservation(props.location.state.reservation);
@@ -125,7 +128,7 @@ function EditReservation(props) {
     return (
         <>
             <div className="d-md-flex">
-                <h4 className="mb-0">New Reservation</h4>
+                <h4 className="mb-0">Edit Reservation</h4>
             </div>
             <ErrorAlert error={backendError} />
             <ul style={{ paddingTop: "1em", listStyleType: "none", paddingLeft: 0 }}>

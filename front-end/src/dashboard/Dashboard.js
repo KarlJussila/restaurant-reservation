@@ -20,7 +20,10 @@ function Dashboard({ date, setDate }) {
     const [tables, setTables] = useState([]);
     const [tablesError, setTablesError] = useState(null);
 
-    useEffect(loadDashboard, [date]);
+    useEffect(() => {
+        loadDashboard();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [date]);
 
     function nextDay() {
         let newDate = new Date(date);
@@ -83,7 +86,7 @@ function Dashboard({ date, setDate }) {
 
             <div className="container">
                 <div className="row">
-                    <div className="col" style={{borderRight: "1px solid grey"}}>
+                    <div className="col mb-4" style={{borderRight: "1px solid grey"}}>
 
                         <div className="d-md-flex mb-3">
                             <h4 className="mb-0">Reservations for {date}</h4>

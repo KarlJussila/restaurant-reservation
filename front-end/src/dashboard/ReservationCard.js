@@ -12,6 +12,7 @@ function ReservationCard({ reservation, loadReservations }) {
     function updateStatus(status="seated") {
         const abortController = new AbortController();
         const newReservation = { reservation_id: reservation.reservation_id, status }
+        console.log(newReservation);
         updateReservationStatus(newReservation, abortController.signal)
             .then((res) => {
                 console.log(res);
@@ -36,7 +37,7 @@ function ReservationCard({ reservation, loadReservations }) {
                 <p className="card-text">Mobile Phone: {reservation.mobile_number}</p>
                 {
                     reservation.status === "booked" ? (
-                        <Link onClick={updateStatus} to={`/reservations/${reservation.reservation_id}/seat`} href={`/reservations/${reservation.reservation_id}/seat`} className="btn btn-outline-primary" style={{float: "left"}}>Seat</Link>
+                        <Link onClick={() => updateStatus("seated")} to={`/reservations/${reservation.reservation_id}/seat`} href={`/reservations/${reservation.reservation_id}/seat`} className="btn btn-outline-primary" style={{float: "left"}}>Seat</Link>
                     ) : <div></div>
                 }
                 {

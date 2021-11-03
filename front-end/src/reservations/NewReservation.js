@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { today } from "../utils/date-time";
 import { createReservation } from "../utils/api";
