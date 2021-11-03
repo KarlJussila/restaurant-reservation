@@ -2,7 +2,7 @@
 
 This is an application for managing reservations and tables at a restaurant.
 
-Live Demo: [live demo](https://restaurant-reservation-frontend-eight.vercel.app)
+Live Demo: https://restaurant-reservation-frontend-eight.vercel.app
 
 ## Features
 * Create new reservations
