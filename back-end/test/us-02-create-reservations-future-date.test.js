@@ -4,20 +4,20 @@ const app = require("../src/app");
 const knex = require("../src/db/connection");
 
 describe("US-02 - Create reservations future date", () => {
-  beforeAll(() => {
-    return knex.migrate
-      .forceFreeMigrationsLock()
-      .then(() => knex.migrate.rollback(null, true))
-      .then(() => knex.migrate.latest());
-  });
-
-  beforeEach(() => {
-    return knex.seed.run();
-  });
-
-  afterAll(async () => {
-    return await knex.migrate.rollback(null, true).then(() => knex.destroy());
-  });
+  // beforeAll(() => {
+  //   return knex.migrate
+  //     .forceFreeMigrationsLock()
+  //     .then(() => knex.migrate.rollback(null, true))
+  //     .then(() => knex.migrate.latest());
+  // });
+  //
+  // beforeEach(() => {
+  //   return knex.seed.run();
+  // });
+  //
+  // afterAll(async () => {
+  //   return await knex.migrate.rollback(null, true).then(() => knex.destroy());
+  // });
 
   describe("POST /reservations", () => {
     test("returns 400 if reservation occurs in the past", async () => {

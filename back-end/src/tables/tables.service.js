@@ -2,13 +2,13 @@ const knex = require("../db/connection");
 
 function validateBody(request, response, next) {
     const { data: { table_name, capacity } = {} } = request.body;
-    if (!table_name) {
+    if (!table_name || table_name.length <= 1) {
         return next({
             status: 400,
-            message: "Table must have a name",
+            message: "table_name field must have at least two characters",
         });
     }
-    if (!capacity || capacity < 1) {
+    if (typeof capacity !== "number" || capacity < 1) {
         return next({
             status: 400,
             message: "Table must have a capacity of at least one",

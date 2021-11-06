@@ -1,35 +1,71 @@
 const knex = require("../db/connection");
 
+function validateStatus(req, res, next) {
+    const validStatus = ["booked", "seated", "finished", "cancelled"]
+    const updatedReservation = req.body.data;
+    if (!validStatus.includes(updatedReservation.status)) {
+        return next({
+            status: 400,
+            message: `Invalid status: ${updatedReservation.status}`,
+        });
+    }
+    next();
+}
+
 function validateBody(request, response, next) {
-    const { data: { first_name, last_name, mobile_number, reservation_date, reservation_time, people } = {} } = request.body;
+    const { data: { first_name, last_name, mobile_number, reservation_date, reservation_time, people, status } = {} } = request.body;
     if (!first_name) {
         return next({
             status: 400,
-            message: "Reservation must include a first name",
+            message: "Reservation must include a first_name field",
         });
     }
     if (!last_name) {
         return next({
             status: 400,
-            message: "Reservation must include a last name",
+            message: "Reservation must include a last_name field",
         });
     }
     if (!mobile_number) {
         return next({
             status: 400,
-            message: "Reservation must include a mobile number",
+            message: "Reservation must include a mobile_number field",
         });
     }
     if (!reservation_date) {
         return next({
             status: 400,
-            message: "Reservation must include a date",
+            message: "Reservation must include a reservation_date field",
         });
     }
     if (!reservation_time) {
         return next({
             status: 400,
-            message: "Reservation must include a time",
+            message: "Reservation must include a reservation_time field",
+        });
+    }
+    if (!people || typeof people !== "number") {
+        return next({
+            status: 400,
+            message: "Reservation must include a number of people greater than 0",
+        });
+    }
+    if (status && (status === "finished" || status === "seated")) {
+        return next({
+            status: 400,
+            message: `Reservation cannot be created with a status of ${status}`,
+        });
+    }
+    if (!Date.parse(reservation_date)) {
+        return next({
+            status: 400,
+            message: "reservation_date must be a valid date",
+        });
+    }
+    if (!Date.parse(`${reservation_date.split("T")[0]}T${reservation_time}`)) {
+        return next({
+            status: 400,
+            message: "reservation_time must be a valid time",
         });
     }
     const date = new Date(`${reservation_date}T${reservation_time}`);
@@ -39,29 +75,22 @@ function validateBody(request, response, next) {
             message: "Reservation must be in the future",
         });
     }
-    if (date.getDay() === 1) {
+    if (date.getDay() === 2) {
         return next({
             status: 400,
             message: "Restaurant is closed on Tuesdays",
         });
     }
-    const time = parseInt(reservation_time.split(":").join(""));
-    if (time < 103000) {
+    if (date < new Date(`${reservation_date}T10:30`)) {
         return next({
             status: 400,
             message: "Restaurant is closed before 10:30 AM",
         });
     }
-    if (time > 213000) {
+    if (date > new Date(`${reservation_date}T21:30`)) {
         return next({
             status: 400,
             message: "Reservation cannot be after 9:30 PM",
-        });
-    }
-    if (!people) {
-        return next({
-            status: 400,
-            message: "Reservation must include a number of people greater than 0",
         });
     }
     next();
@@ -69,7 +98,7 @@ function validateBody(request, response, next) {
 
 async function read(reservationId) {
     const data = await knex("reservations").select(
-        "reservation_id as id",
+        "reservation_id",
         "first_name",
         "last_name",
         "mobile_number",
@@ -98,10 +127,12 @@ async function list(req, res) {
     return knex("reservations")
         .select("*")
         .where({ reservation_date })
+        .whereNot({ status: "finished" })
         .orderBy("reservation_time");
 }
 
 async function update(updatedReservation) {
+    console.log("Updated:", updatedReservation);
     const updatedReservationResponse = await knex("reservations")
         .select("*")
         .where({ reservation_id: updatedReservation.reservation_id })
@@ -121,5 +152,6 @@ module.exports = {
     list,
     update,
     create,
-    validateBody
+    validateBody,
+    validateStatus
 };

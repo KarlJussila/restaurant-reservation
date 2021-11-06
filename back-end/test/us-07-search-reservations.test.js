@@ -4,20 +4,20 @@ const app = require("../src/app");
 const knex = require("../src/db/connection");
 
 describe("US-07 - Search reservation by phone number", () => {
-  beforeAll(() => {
-    return knex.migrate
-      .forceFreeMigrationsLock()
-      .then(() => knex.migrate.rollback(null, true))
-      .then(() => knex.migrate.latest());
-  });
-
-  beforeEach(() => {
-    return knex.seed.run();
-  });
-
-  afterAll(async () => {
-    return await knex.migrate.rollback(null, true).then(() => knex.destroy());
-  });
+  // beforeAll(() => {
+  //   return knex.migrate
+  //     .forceFreeMigrationsLock()
+  //     .then(() => knex.migrate.rollback(null, true))
+  //     .then(() => knex.migrate.latest());
+  // });
+  //
+  // beforeEach(() => {
+  //   return knex.seed.run();
+  // });
+  //
+  // afterAll(async () => {
+  //   return await knex.migrate.rollback(null, true).then(() => knex.destroy());
+  // });
 
   describe("GET /reservations?mobile_number=...", () => {
     test("returns reservations for a partial existing phone number", async () => {

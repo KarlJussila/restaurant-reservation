@@ -9,7 +9,17 @@ async function reservationExists(req, res, next) {
         res.locals.reservation = reservation;
         return next();
     }
-    return next({ status: 404, message: `Reservation cannot be found.` });
+    return next({ status: 404, message: `Reservation ${reservationId} cannot be found.` });
+}
+
+async function reservationNotFinished(req, res, next) {
+    if (res.locals.reservation.status === "finished") {
+        return next({
+            status: 400,
+            message: `Reservation is already finished and cannot be updated`
+        });
+    }
+    next();
 }
 
 async function read(req, res, next) {
@@ -17,9 +27,9 @@ async function read(req, res, next) {
 }
 
 async function list(req, res, next) {
-    const { mobile_phone } = req.query;
-    if (mobile_phone) {
-        return res.json({ data: await service.listByPhoneNumber(mobile_phone) })
+    const { mobile_number } = req.query;
+    if (mobile_number) {
+        return res.json({ data: await service.listByPhoneNumber(mobile_number) })
     }
     res.json({ data: await service.list(req, res) });
 }
@@ -31,14 +41,22 @@ async function update(req, res) {
     res.json({ data });
 }
 
+async function updateStatus(req, res) {
+    const updatedReservation = { status: req.body.data.status };
+    updatedReservation.reservation_id = req.params.reservationId;
+    const data = await service.update(updatedReservation);
+    res.json({ data });
+}
+
 async function create(req, res) {
     const result = service.create(req.body.data);
-    res.status(201).json({ message: "Created" });
+    res.status(201).json({ data: req.body.data });
 }
 
 module.exports = {
     read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
     list: asyncErrorBoundary(list),
-    update: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(update)],
+    update: [service.validateBody, asyncErrorBoundary(reservationExists), asyncErrorBoundary(update)],
+    updateStatus: [asyncErrorBoundary(reservationExists), service.validateStatus, reservationNotFinished, asyncErrorBoundary(updateStatus)],
     create: [service.validateBody, asyncErrorBoundary(create)]
 };

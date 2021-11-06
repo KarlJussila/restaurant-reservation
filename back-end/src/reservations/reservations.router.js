@@ -6,7 +6,7 @@ const cors = require("cors");
 const corsConfig = cors({ methods: ["GET", "PUT", "POST"] });
 
 router.route("/:reservationId/status")
-    .put(corsConfig, controller.update)
+    .put(corsConfig, controller.updateStatus)
     .all(methodNotAllowed);
 
 router.route("/:reservationId")
