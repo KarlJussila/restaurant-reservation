@@ -40,8 +40,8 @@ function NewReservation() {
         if (capacity < 1) {
             errorList.push("Table must have a capacity of at least one");
         }
-        if (!tableName) {
-            errorList.push("Table Name field is required");
+        if (!tableName || tableName.length <= 1) {
+            errorList.push("Table Name field must be at least two characters");
         }
 
         if (errorList.length) {

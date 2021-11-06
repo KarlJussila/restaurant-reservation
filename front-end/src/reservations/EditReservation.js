@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { today } from "../utils/date-time";
 import { updateReservation, getReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationForm from "./ReservationForm";
 
 function EditReservation(props) {
     const history = useHistory();
@@ -142,85 +143,22 @@ function EditReservation(props) {
                     }) : <div></div>
                 }
             </ul>
-            <form onSubmit={handleSubmit} className="container">
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="firstName" className="form-label">First Name</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="firstName"
-                            placeholder="First Name"
-                            onChange={handleFirstNameChange}
-                            value={firstName}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="lastName" className="form-label">Last Name</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="lastName"
-                            placeholder="Last Name"
-                            onChange={handleLastNameChange}
-                            value={lastName}
-                        />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="date" className="form-label">Date</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            id="date"
-                            placeholder={today()}
-                            onChange={handleDateChange}
-                            value={date}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="time" className="form-label">Time</label>
-                        <input
-                            type="time"
-                            className="form-control"
-                            id="time"
-                            onChange={handleTimeChange}
-                            value={time}
-                        />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="mobileNumber" className="form-label">Mobile Number</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="mobileNumber"
-                            placeholder="555-555-5555"
-                            onChange={handleMobileNumberChange}
-                            value={mobileNumber}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="people" className="form-label">Party Size</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="people"
-                            onChange={handlePeopleChange}
-                            value={people}
-                        />
-                    </div>
-                </div>
-
-                <button onClick={() => history.goBack()} className="btn btn-secondary mr-1">Cancel</button>
-                <button type="submit" className="btn btn-primary">Submit</button>
-
-            </form>
+            <ReservationForm
+                    handleSubmit={handleSubmit}
+                    handleFirstNameChange={handleFirstNameChange}
+                    firstName={firstName}
+                    handleLastNameChange={handleLastNameChange}
+                    lastName={lastName}
+                    handleDateChange={handleDateChange}
+                    date={date}
+                    handleTimeChange={handleTimeChange}
+                    time={time}
+                    handleMobileNumberChange={handleMobileNumberChange}
+                    mobileNumber={mobileNumber}
+                    handlePeopleChange={handlePeopleChange}
+                    people={people}
+                    history={history}
+            />
         </>
     );
 }

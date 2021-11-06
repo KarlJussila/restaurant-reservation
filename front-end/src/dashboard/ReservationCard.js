@@ -37,7 +37,7 @@ function ReservationCard({ reservation, loadReservations }) {
                 <p className="card-text">Mobile Phone: {reservation.mobile_number}</p>
                 {
                     reservation.status === "booked" ? (
-                        <Link onClick={() => updateStatus("seated")} to={`/reservations/${reservation.reservation_id}/seat`} href={`/reservations/${reservation.reservation_id}/seat`} className="btn btn-outline-primary" style={{float: "left"}}>Seat</Link>
+                        <Link to={`/reservations/${reservation.reservation_id}/seat`} href={`/reservations/${reservation.reservation_id}/seat`} className="btn btn-outline-primary" style={{float: "left"}}>Seat</Link>
                     ) : <div></div>
                 }
                 {

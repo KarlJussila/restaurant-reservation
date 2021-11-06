@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { today } from "../utils/date-time";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationForm from "./ReservationForm";
 
 function NewReservation() {
     const history = useHistory();
@@ -66,17 +67,16 @@ function NewReservation() {
         if (!time) {
             errorList.push("Time field is required");
         } else {
-            const timeInt = parseInt(time.replace(":", ""));
-            if (parseInt(timeInt) < 1030) {
+            if (new Date(`${date}T${time}`) < new Date(`${date}T10:30`)) {
                 errorList.push("Reservations are not available before 10:30 AM");
-            } else if (timeInt > 2130) {
-                errorList.push("Reservations are not after before 9:30 PM");
+            } else if (new Date(`${date}T${time}`) > new Date(`${date}T21:30`)) {
+                errorList.push("Reservations are not available after 9:30 PM");
             }
         }
         if (!mobileNumber) {
             errorList.push("Mobile Number field is required");
         }
-        if ((new Date(date)).getDay() === 1) {
+        if ((new Date(`${date}T${time}`)).getDay() === 2) {
             errorList.push("Reservations are not available on Tuesdays");
         }
         if (new Date(date + " " + time + ":00") < new Date()) {
@@ -117,91 +117,22 @@ function NewReservation() {
                     }) : <div></div>
                 }
             </ul>
-            <form onSubmit={handleSubmit} className="container">
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="firstName" className="form-label">First Name</label>
-                        <input
-                            name="first_name"
-                            type="text"
-                            className="form-control"
-                            id="firstName"
-                            placeholder="First Name"
-                            onChange={handleFirstNameChange}
-                            value={firstName}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="lastName" className="form-label">Last Name</label>
-                        <input
-                            name="last_name"
-                            type="text"
-                            className="form-control"
-                            id="lastName"
-                            placeholder="Last Name"
-                            onChange={handleLastNameChange}
-                            value={lastName}
-                        />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="date" className="form-label">Date</label>
-                        <input
-                            name="reservation_date"
-                            type="date"
-                            className="form-control"
-                            id="date"
-                            placeholder={today()}
-                            onChange={handleDateChange}
-                            value={date}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="time" className="form-label">Time</label>
-                        <input
-                            name="reservation_time"
-                            type="time"
-                            className="form-control"
-                            id="time"
-                            onChange={handleTimeChange}
-                            value={time}
-                        />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="mb-3 col">
-                        <label htmlFor="mobileNumber" className="form-label">Mobile Number</label>
-                        <input
-                            name="mobile_number"
-                            type="text"
-                            className="form-control"
-                            id="mobileNumber"
-                            placeholder="555-555-5555"
-                            onChange={handleMobileNumberChange}
-                            value={mobileNumber}
-                        />
-                    </div>
-                    <div className="mb-3 col">
-                        <label htmlFor="people" className="form-label">Party Size</label>
-                        <input
-                            name="people"
-                            type="number"
-                            className="form-control"
-                            id="people"
-                            onChange={handlePeopleChange}
-                            value={people}
-                        />
-                    </div>
-                </div>
-
-                <button onClick={() => history.goBack()} className="btn btn-secondary mr-1">Cancel</button>
-                <button type="submit" className="btn btn-primary">Submit</button>
-
-            </form>
+            <ReservationForm
+                    handleSubmit={handleSubmit}
+                    handleFirstNameChange={handleFirstNameChange}
+                    firstName={firstName}
+                    handleLastNameChange={handleLastNameChange}
+                    lastName={lastName}
+                    handleDateChange={handleDateChange}
+                    date={date}
+                    handleTimeChange={handleTimeChange}
+                    time={time}
+                    handleMobileNumberChange={handleMobileNumberChange}
+                    mobileNumber={mobileNumber}
+                    handlePeopleChange={handlePeopleChange}
+                    people={people}
+                    history={history}
+            />
         </>
     );
 }

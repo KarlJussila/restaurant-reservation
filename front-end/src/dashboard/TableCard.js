@@ -1,4 +1,4 @@
-import { unseatTable, updateReservationStatus } from "../utils/api";
+import { unseatTable } from "../utils/api";
 
 function TableCard({ table, loadTables, loadReservations }) {
 
@@ -10,13 +10,6 @@ function TableCard({ table, loadTables, loadReservations }) {
             .then((res) => {
                 console.log(res);
                 loadTables();
-            })
-            .catch(console.log);
-
-        const reservation = { reservation_id: table.reservation_id, status: "finished" }
-        updateReservationStatus(reservation, abortController.signal)
-            .then((res) => {
-                console.log(res);
                 loadReservations();
             })
             .catch(console.log);
