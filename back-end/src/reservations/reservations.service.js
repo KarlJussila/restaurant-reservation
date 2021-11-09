@@ -97,17 +97,14 @@ function validateBody(request, response, next) {
 }
 
 async function read(reservationId) {
-    const data = await knex("reservations").select(
-        "reservation_id",
-        "first_name",
-        "last_name",
-        "mobile_number",
-        "reservation_date",
-        "reservation_time",
-        "people",
-        "status"
-    ).where({ reservation_id: reservationId }).first();
-    console.log(data);
+    const data = await knex("reservations")
+        .select("*")
+        .where({ reservation_id: reservationId })
+        .first();
+    console.log(reservationId, data);
+    if (!data) {
+        console.log(await knex("reservations").select("*"));
+    }
     return data;
 }
 
