@@ -65,7 +65,7 @@ function EditReservation(props) {
         updateReservation(newReservation, abortController.signal)
             .then((response) => {
                 console.log(response);
-                history.goBack();
+                history.push(`/dashboard?date=${newReservation.reservation_date}`);
             })
             .catch(setBackendError);
         return () => abortController.abort();

@@ -80,8 +80,10 @@ async function seat(req, res) {
 }
 
 async function create(req, res) {
-    const result = service.create(req.body.data);
-    res.status(201).json({ data: req.body.data });
+    const newTable = req.body.data;
+    const result = await service.create(req.body.data);
+    newTable.table_id = result[0];
+    res.status(201).json({ data: newTable });
 }
 
 async function unseat(req, res, next) {

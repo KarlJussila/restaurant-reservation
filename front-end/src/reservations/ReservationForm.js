@@ -10,6 +10,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="firstName" className="form-label">First Name</label>
                     <input
+                        name="first_name"
                         type="text"
                         className="form-control"
                         id="firstName"
@@ -21,6 +22,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="lastName" className="form-label">Last Name</label>
                     <input
+                        name="last_name"
                         type="text"
                         className="form-control"
                         id="lastName"
@@ -35,6 +37,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="date" className="form-label">Date</label>
                     <input
+                        name="reservation_date"
                         type="date"
                         className="form-control"
                         id="date"
@@ -46,6 +49,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="time" className="form-label">Time</label>
                     <input
+                        name="reservation_time"
                         type="time"
                         className="form-control"
                         id="time"
@@ -59,6 +63,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="mobileNumber" className="form-label">Mobile Number</label>
                     <input
+                        name="mobile_number"
                         type="text"
                         className="form-control"
                         id="mobileNumber"
@@ -70,6 +75,7 @@ function ReservationForm({handleSubmit, handleFirstNameChange, firstName, handle
                 <div className="mb-3 col">
                     <label htmlFor="people" className="form-label">Party Size</label>
                     <input
+                        name="people"
                         type="number"
                         className="form-control"
                         id="people"

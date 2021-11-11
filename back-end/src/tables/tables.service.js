@@ -38,7 +38,7 @@ async function update(updatedTable) {
 }
 
 async function create(newTable) {
-    const result = await knex('tables').insert(newTable);
+    const result = await knex('tables').insert(newTable).returning("table_id");
     return result;
 }
 

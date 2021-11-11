@@ -4,6 +4,8 @@ import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationCard from "./ReservationCard";
 import TableCard from "./TableCard";
+import { today } from "../utils/date-time";
+import useQuery from "../utils/useQuery";
 
 /**
  * Defines the dashboard page.
@@ -11,8 +13,11 @@ import TableCard from "./TableCard";
  *    the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, setDate }) {
+function Dashboard() {
     const history = useHistory();
+    const query = useQuery();
+
+    const [date, setDate] = useState(query.get("date") || today());
 
     const [reservations, setReservations] = useState([]);
     const [reservationsError, setReservationsError] = useState(null);
@@ -47,7 +52,7 @@ function Dashboard({ date, setDate }) {
         })
     }
 
-    function today() {
+    function setToday() {
         let newDate = new Date();
         newDate = newDate.toISOString().split('T')[0]
         setDate(newDate);
@@ -107,7 +112,7 @@ function Dashboard({ date, setDate }) {
                             <button onClick={nextDay} className="btn btn-secondary mr-2">{"Next Day >"}</button>
                         </div>
                         <div style={{float: "right"}}>
-                            <button onClick={today} className="btn btn-secondary">Today</button>
+                            <button onClick={setToday} className="btn btn-secondary">Today</button>
                         </div>
 
                     </div>

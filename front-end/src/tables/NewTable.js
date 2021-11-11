@@ -26,7 +26,6 @@ function NewReservation() {
                 history.push({
                     pathname: '/dashboard'
                 });
-                window.location.reload(false);
             })
             .catch(setBackendError);
         return () => abortController.abort();

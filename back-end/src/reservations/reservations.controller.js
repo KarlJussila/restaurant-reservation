@@ -49,7 +49,9 @@ async function updateStatus(req, res) {
 }
 
 async function create(req, res) {
-    const result = service.create(req.body.data);
+    const newReservation = req.body.data;
+    const result = await service.create(newReservation);
+    newReservation.reservation_id = result[0];
     res.status(201).json({ data: req.body.data });
 }
 

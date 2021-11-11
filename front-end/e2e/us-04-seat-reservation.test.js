@@ -2,6 +2,8 @@ const puppeteer = require("puppeteer");
 const { setDefaultOptions } = require('expect-puppeteer');
 const fs = require("fs");
 const fsPromises = fs.promises;
+const { promisify } = require('util');
+const sleep = promisify(setTimeout);
 
 const { createReservation } = require("./api");
 const { selectOptionByText } = require("./utils");
@@ -189,6 +191,7 @@ describe("US-04 - Seat reservation - E2E", () => {
         page.waitForNavigation({ waitUntil: "networkidle0" }),
       ]);
 
+      await sleep(1000);
       await page.screenshot({
         path: ".screenshots/us-04-seat-reservation-submit-after.png",
         fullPage: true,

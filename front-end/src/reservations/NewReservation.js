@@ -37,11 +37,7 @@ function NewReservation() {
         createReservation({ data: reservation }, abortController.signal)
             .then((response) => {
                 console.log(response);
-                history.push({
-                    pathname: '/dashboard',
-                    search: `?date=${reservation.reservation_date}`
-                });
-                window.location.reload(false);
+                history.push(`/dashboard?date=${reservation.reservation_date}`);
             })
             .catch(setBackendError);
         return () => abortController.abort();

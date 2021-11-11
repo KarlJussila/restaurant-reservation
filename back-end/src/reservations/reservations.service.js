@@ -102,9 +102,6 @@ async function read(reservationId) {
         .where({ reservation_id: reservationId })
         .first();
     console.log(reservationId, data);
-    if (!data) {
-        console.log(await knex("reservations").select("*"));
-    }
     return data;
 }
 
@@ -139,7 +136,7 @@ async function update(updatedReservation) {
 }
 
 async function create(newReservation) {
-    const result = await knex('reservations').insert(newReservation);
+    const result = await knex('reservations').insert(newReservation).returning("reservation_id");
     return result;
 }
 
