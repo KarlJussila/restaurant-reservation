@@ -15,22 +15,22 @@ Live Demo: https://restaurant-reservation-frontend-eight.vercel.app
 * Cancel reservations to remove them from the dashboard
 
 ### Dashboard
-![dashboard](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/dashboard.png)
+![dashboard](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/dashboard.png)
 
 ### New Reservation
-![new reservation](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/new_reservation.png)
+![new reservation](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/new_reservation.png)
 
 ### New Table
-![new reservation](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/new_table.png)
+![new reservation](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/new_table.png)
 
 ### Edit Reservation
-![edit reservation](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/edit_reservation.png)
+![edit reservation](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/edit_reservation.png)
 
 ### Seating Reservation
-![seating reservation](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/seat.png)
+![seating reservation](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/seat.png)
 
 ### Search by phone number
-![searching](https://github.com/KarlJussila/starter-restaurant-reservation/blob/main/images/search.png)
+![searching](https://github.com/KarlJussila/restaurant-reservation/blob/main/images/search.png)
 
 ## Backend API Routes
 ### PUT /reservations/:reservationId/status
